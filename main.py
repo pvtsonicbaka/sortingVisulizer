@@ -1,21 +1,108 @@
 from tkinter import *
 from random import *
 from tkinter import ttk
-root=Tk()
-root.title("Sorting some alogorithms")
+from random import *
+
+
+root = Tk()
+root.title("Sorting Algorithms")
 root.geometry("1500x1000")
-root.config(background="black")
+root.config(background="#274186")
 
-algo=StringVar()
+algo = StringVar()
+def drawData(data):
+    print("hi")
+    canvas_width = canvas.winfo_width()
+    canvas_height= canvas.winfo_height()
+    rec_width=canvas_width/(len(data)+1)
+    padding_top=50
 
-AlgortithmMenu = Label(root,text="Algortihm",font="Arial 15 italic bold" ,bg="blue",
-width="10"
-)
-AlgortithmMenu.place(x="10",y="10")
+    offset = 10
+    spacing_bet_rec=5
+    normalizedData = [ i / max(data) if max(data) > 0 else 0 for i in data ]
+    print(normalizedData)
+    canvas.delete("all")
+    max_height = max(normalizedData) if normalizedData else 1
 
-algo_menu= ttk.Combobox(root,font="bold" ,textvariable=algo,values=['Bubble sort','Insetion sort','Merge Sort'],
-                        width="10"
-                        )
-algo_menu.place(x="130",y="11")
+    for i, height in enumerate(normalizedData):
+        x0 = i * rec_width + offset + (i * spacing_bet_rec)  # Calculate the starting x position
+        y0 = canvas_height - (height * (canvas_height-padding_top))  # Starting y position based on normalized height
+        y0= max(y0,padding_top)
+        
+        x1 = x0 + rec_width  # Ending x position
+        y1 = canvas_height  # Bottom of the canvas
+
+        # Draw rectangle
+        canvas.create_rectangle(x0, y0, x1, y1, fill="blue")
+        
+        # Place text in the middle of the rectangle, above it
+        canvas.create_text(x0 + rec_width / 2 + spacing_bet_rec / 2, y0 , anchor="s", text=str(data[i]), fill="orange", font="Arial 20 bold")
+
+def randomGenrateData():
+    print(minSize.get() , maxSize.get(),size.get())
+    min_size = minSize.get()
+    max_size= maxSize.get()
+    len= size.get() 
+
+    l= [] 
+    for i in range(len):
+        randomNum = randint(min_size,max_size+1)
+        l.append(randomNum)
+    return l
+
+def GENERATE():
+    print("GENERATING function"+algo.get() )
+    a= randomGenrateData()
+    drawData(a)
+        
+
+
+# Algorithm Label
+AlgorithmMenu = Label(root, text="Algorithm: ", font="Arial 15 italic bold", bg="blue", width=15)
+AlgorithmMenu.grid(row=0, column=0, padx=20, pady=8)
+
+# Algorithm Dropdown Menu
+algo_menu = ttk.Combobox(root, font="bold", textvariable=algo, values=['Bubble sort', 'Insertion sort', 'Merge Sort'], width=15)
+algo_menu.grid(row=0, column=1, padx=10, pady=8)
+
+# Input Size Label and Scale
+sizeLabel = Label(root, text="Input Size:", font="Courier 15 italic bold", bg="green", relief="solid", width=15)
+sizeLabel.grid(row=1, column=0, padx=20, pady=8)
+size = Scale(root, from_=0, to=100, orient="horizontal", font="Courier 15 italic bold", bg="green", relief="solid", width=15)
+size.grid(row=1, column=1, padx=20, pady=8)
+
+# Minimum Size Label and Scale
+minLabel = Label(root, text="Minimum", font="Courier 15 italic bold", bg="blue", relief="solid", width=15)
+minLabel.grid(row=1, column=2, padx=20, pady=8)
+minSize = Scale(root, from_=0, to=100, orient="horizontal", font="Courier 15 italic bold", bg="green", relief="solid", width=15)
+minSize.grid(row=1, column=3, padx=20, pady=8)
+
+# Maximum Size Label and Scale
+maxLabel = Label(root, text="Maximum", font="Courier 15 italic bold", bg="blue", relief="solid", width=15)
+maxLabel.grid(row=1, column=4, padx=20, pady=8 )
+maxSize = Scale(root, from_=0, to=100, orient="horizontal", font="Courier 15 italic bold", bg="green", relief="solid", width=15)
+maxSize.grid(row=1, column=5, padx=20, pady=8)
+
+# Generate Button
+randomGenerate = Button(root, text="GENERATE", bg="cyan", font="Georgia 15 italic bold", relief='sunken', width=15, command=GENERATE)
+randomGenerate.grid(row=1, column=6, padx=20, pady=8)
+
+# Speed Label and Scale
+speedLabel = Label(root, text="Speed", font="Arial 15 italic bold", bg="blue", width=15)
+speedLabel.grid(row=0, column=2, padx=20, pady=8 )
+speed = Scale(root, from_=0.1, to=5,resolution=1, orient="horizontal", font="Courier 15 italic bold", bg="green", relief="solid", width=15)
+speed.grid(row=0, column=3, padx=20, pady=8)
+
+# Start Button
+start = Button(root, text="Start", bg="cyan", font="Georgia 15 italic bold", relief='sunken', width=15)
+start.grid(row=0, column=4, padx=20, pady=8)
+
+# Configure row weights to allow the canvas to fill available space
+root.grid_rowconfigure(2, weight=1)  # This is the row where the canvas is
+root.grid_columnconfigure(0, weight=1)  # Optional: allows the first column to expand
+
+# Canvas
+canvas = Canvas(root, bg="white")
+canvas.grid(row=2, columnspan=7, padx=20, pady=20, sticky='nsew')  # Fill all columns and stretch
 
 root.mainloop()
