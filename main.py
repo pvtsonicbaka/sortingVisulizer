@@ -3,29 +3,40 @@ from random import *
 from tkinter import ttk
 from random import *
 
-
 root = Tk()
 root.title("Sorting Algorithms")
 root.geometry("1500x1000")
 root.config(background="#274186")
-
 algo = StringVar()
+data=[]
+
+def startAlgo():
+    algortihm=algo.get()
+
+
+
+
 def drawData(data):
-    print("hi")
+    
+
     canvas_width = canvas.winfo_width()
     canvas_height= canvas.winfo_height()
+
+
     rec_width=canvas_width/(len(data)+1)
     padding_top=50
 
+
     offset = 10
-    spacing_bet_rec=5
+    spacing_bet_rec=1
     normalizedData = [ i / max(data) if max(data) > 0 else 0 for i in data ]
-    print(normalizedData)
     canvas.delete("all")
     max_height = max(normalizedData) if normalizedData else 1
+    font_size = max(8, 20 - len(data) // 10)
 
+     
     for i, height in enumerate(normalizedData):
-        x0 = i * rec_width + offset + (i * spacing_bet_rec)  # Calculate the starting x position
+        x0 = i * rec_width + (1* spacing_bet_rec)  # Calculate the starting x position
         y0 = canvas_height - (height * (canvas_height-padding_top))  # Starting y position based on normalized height
         y0= max(y0,padding_top)
         
@@ -36,7 +47,8 @@ def drawData(data):
         canvas.create_rectangle(x0, y0, x1, y1, fill="blue")
         
         # Place text in the middle of the rectangle, above it
-        canvas.create_text(x0 + rec_width / 2 + spacing_bet_rec / 2, y0 , anchor="s", text=str(data[i]), fill="orange", font="Arial 20 bold")
+        canvas.create_text(x0 + rec_width / 2 , y0-10, anchor="center",
+                            text=str(data[i]), fill="orange", font=("Arial",font_size,"bold"))
 
 def randomGenrateData():
     print(minSize.get() , maxSize.get(),size.get())
@@ -51,9 +63,15 @@ def randomGenrateData():
     return l
 
 def GENERATE():
+    global data
+
     print("GENERATING function"+algo.get() )
-    a= randomGenrateData()
-    drawData(a)
+    
+    if minSize > maxSize:
+        minSize,maxSize= maxSize,minSize
+    data= randomGenrateData()
+    drawData(data)
+
         
 
 
@@ -90,11 +108,12 @@ randomGenerate.grid(row=1, column=6, padx=20, pady=8)
 # Speed Label and Scale
 speedLabel = Label(root, text="Speed", font="Arial 15 italic bold", bg="blue", width=15)
 speedLabel.grid(row=0, column=2, padx=20, pady=8 )
-speed = Scale(root, from_=0.1, to=5,resolution=1, orient="horizontal", font="Courier 15 italic bold", bg="green", relief="solid", width=15)
+speed = Scale(root, from_=0, to=5,resolution=0.2, orient="horizontal", font="Courier 15 italic bold", bg="green", relief="solid", width=15
+              )
 speed.grid(row=0, column=3, padx=20, pady=8)
 
 # Start Button
-start = Button(root, text="Start", bg="cyan", font="Georgia 15 italic bold", relief='sunken', width=15)
+start = Button(root, text="Start", bg="cyan",command=startAlgo, font="Georgia 15 italic bold", relief='sunken', width=15)
 start.grid(row=0, column=4, padx=20, pady=8)
 
 # Configure row weights to allow the canvas to fill available space
@@ -105,4 +124,7 @@ root.grid_columnconfigure(0, weight=1)  # Optional: allows the first column to e
 canvas = Canvas(root, bg="white")
 canvas.grid(row=2, columnspan=7, padx=20, pady=20, sticky='nsew')  # Fill all columns and stretch
 
+
+
+root.update_idletasks()
 root.mainloop()
