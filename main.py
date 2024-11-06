@@ -1,7 +1,8 @@
 from tkinter import *
 from random import *
 from tkinter import ttk
-from random import *
+from Bubblesort import bubbleSort
+from BogoSort import bogosort
 
 root = Tk()
 root.title("Sorting Algorithms")
@@ -9,21 +10,23 @@ root.geometry("1500x1000")
 root.config(background="#274186")
 algo = StringVar()
 data=[]
+minSize=1
+maxSize=1
+
 
 def startAlgo():
-    algortihm=algo.get()
+    sleeptime= speed.get()
+    bogosort(data,drawData,sleeptime)
+    
 
-
-
-
-def drawData(data):
+def drawData(data,colorArray):
     
 
     canvas_width = canvas.winfo_width()
     canvas_height= canvas.winfo_height()
 
 
-    rec_width=canvas_width/(len(data)+1)
+    rec_width=canvas_width/(len(data))
     padding_top=50
 
 
@@ -44,11 +47,12 @@ def drawData(data):
         y1 = canvas_height  # Bottom of the canvas
 
         # Draw rectangle
-        canvas.create_rectangle(x0, y0, x1, y1, fill="blue")
+        canvas.create_rectangle(x0, y0, x1, y1, fill=colorArray[i])
         
         # Place text in the middle of the rectangle, above it
         canvas.create_text(x0 + rec_width / 2 , y0-10, anchor="center",
                             text=str(data[i]), fill="orange", font=("Arial",font_size,"bold"))
+    root.update_idletasks()
 
 def randomGenrateData():
     print(minSize.get() , maxSize.get(),size.get())
@@ -62,15 +66,22 @@ def randomGenrateData():
         l.append(randomNum)
     return l
 
+
 def GENERATE():
     global data
+    global minSize
+    global maxSize
+
 
     print("GENERATING function"+algo.get() )
     
-    if minSize > maxSize:
-        minSize,maxSize= maxSize,minSize
+    
+    if minSize.get() > maxSize.get():
+        maxSize,minSize=minSize,maxSize
+
     data= randomGenrateData()
-    drawData(data)
+    colorArray= ['Blue' for x in range(len(data))]
+    drawData(data,colorArray)
 
         
 
@@ -121,10 +132,9 @@ root.grid_rowconfigure(2, weight=1)  # This is the row where the canvas is
 root.grid_columnconfigure(0, weight=1)  # Optional: allows the first column to expand
 
 # Canvas
-canvas = Canvas(root, bg="white")
+canvas = Canvas(root, bg="black")
 canvas.grid(row=2, columnspan=7, padx=20, pady=20, sticky='nsew')  # Fill all columns and stretch
 
 
 
-root.update_idletasks()
 root.mainloop()
