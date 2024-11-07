@@ -3,6 +3,10 @@ from random import *
 from tkinter import ttk
 from Bubblesort import bubbleSort
 from BogoSort import bogosort
+# from InsertionSort import insertionSort
+# from MergeSort import mergeSort 
+from QuickSort import quicksort
+
 
 root = Tk()
 root.title("Sorting Algorithms")
@@ -14,10 +18,28 @@ minSize=1
 maxSize=1
 
 
+
+
+
 def startAlgo():
     sleeptime= speed.get()
-    bogosort(data,drawData,sleeptime)
     
+    length=len(data)
+    quicksort(data,0,length,drawData,sleeptime)
+    drawData(data,['green' for x in range(len(data))])
+    print(data)
+    # if algo=="Bubble sort":
+        # bubbleSort(data,drawData,sleeptime)
+    # elif algo=="Insertion sort":
+    #     insertionSort(data,drawData,sleeptime)
+    # elif algo=="Merge Sort":
+    #     mergeSort(data,drawData,sleeptime)
+    # elif algo=="Quick Sort":
+    #     print("i")
+    # elif algo=="Bogo Sort":
+    #     print("remaming")
+
+        
 
 def drawData(data,colorArray):
     
@@ -91,7 +113,7 @@ AlgorithmMenu = Label(root, text="Algorithm: ", font="Arial 15 italic bold", bg=
 AlgorithmMenu.grid(row=0, column=0, padx=20, pady=8)
 
 # Algorithm Dropdown Menu
-algo_menu = ttk.Combobox(root, font="bold", textvariable=algo, values=['Bubble sort', 'Insertion sort', 'Merge Sort'], width=15)
+algo_menu = ttk.Combobox(root, font="bold", textvariable=algo, values=['Bubble sort', 'Insertion sort', 'Merge Sort','Quick Sort','Bogo Sort'], width=15)
 algo_menu.grid(row=0, column=1, padx=10, pady=8)
 
 # Input Size Label and Scale
