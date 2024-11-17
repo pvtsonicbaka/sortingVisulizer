@@ -1,6 +1,7 @@
 import time 
 
 
+
 def partition(data,p,q,drawData,timetick):
     pivot = data[p]
     i=p

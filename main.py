@@ -3,7 +3,7 @@ from random import *
 from tkinter import ttk
 from Bubblesort import bubbleSort
 from BogoSort import bogosort
-# from InsertionSort import insertionSort
+from InsertionSort import insertionSort
 # from MergeSort import mergeSort 
 from QuickSort import quicksort
 
@@ -23,11 +23,12 @@ maxSize=1
 
 def startAlgo():
     sleeptime= speed.get()
+    insertionSort(data,drawData,sleeptime)
     
-    length=len(data)
-    quicksort(data,0,length,drawData,sleeptime)
-    drawData(data,['green' for x in range(len(data))])
-    print(data)
+    # length=len(data)
+    # quicksort(data,0,length,drawData,sleeptime)
+    # drawData(data,['green' for x in range(len(data))])
+    # print(data)
     # if algo=="Bubble sort":
         # bubbleSort(data,drawData,sleeptime)
     # elif algo=="Insertion sort":
