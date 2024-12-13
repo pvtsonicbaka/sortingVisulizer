@@ -1,10 +1,10 @@
 from tkinter import *
-from random import *
 from tkinter import ttk
+from random import *
 from Bubblesort import bubbleSort
 from BogoSort import bogosort
 from InsertionSort import insertionSort
-# from MergeSort import mergeSort 
+from MergeSort import *
 from QuickSort import quicksort
 
 
@@ -18,30 +18,47 @@ minSize=1
 maxSize=1
 
 
+timeOfCompletion=0
+totalSwaps=0
+writesToAuxilaryArray=0
+writesToMainArray=0
+
+def printAlgoStates():
+    child = Toplevel(root)
+    
+    child.title("states")
+    child.geometry("300x300")
+    
+    label = Label(child, text="This is a new window!")
+    label.pack(pady=20)
+    
+    # Add a button to close the new window
+    close_button = Button(child, text="Close", command=child.destroy)
+    close_button.pack()
 
 
 
 def startAlgo():
+    global timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray
     sleeptime= speed.get()
-    insertionSort(data,drawData,sleeptime)
+
+    algo_name=algo.get()
+    print(algo,algo_name)
+    if algo_name=="Bubble sort":
+        bubbleSort(data,drawData,sleeptime)
+    elif algo_name=="Insertion sort":
+        insertionSort(data,drawData,sleeptime)
+    elif algo_name=="Merge Sort":
+        # mergeSort(data,drawData,sleeptime)
+        pass
+    elif algo_name=="Quick Sort":
+        quicksort(data,0,len(data),drawData,sleeptime)
+        drawData(data,['green' for x in range(len(data))])
+        print("i")
+    elif algo_name=="Bogo Sort":
+        timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray = bogosort(data,drawData,sleeptime)
     
-    # length=len(data)
-    # quicksort(data,0,length,drawData,sleeptime)
-    # drawData(data,['green' for x in range(len(data))])
-    # print(data)
-    # if algo=="Bubble sort":
-        # bubbleSort(data,drawData,sleeptime)
-    # elif algo=="Insertion sort":
-    #     insertionSort(data,drawData,sleeptime)
-    # elif algo=="Merge Sort":
-    #     mergeSort(data,drawData,sleeptime)
-    # elif algo=="Quick Sort":
-    #     print("i")
-    # elif algo=="Bogo Sort":
-    #     print("remaming")
-
-        
-
+    printAlgoStates()
 def drawData(data,colorArray):
     
 

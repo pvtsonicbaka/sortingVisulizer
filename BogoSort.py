@@ -9,21 +9,39 @@ def isSorted(data):
     return True
 
 
+timeOfCompletion=0
+totalSwaps=0
+writesToAuxilaryArray=0
+writesToMainArray=0
+
+
 def bogosort(data,drawData,timeTick):
-    iterations=0
+
+    global timeOfCompletion 
+    global totalSwaps
+    global writesToAuxilaryArray
+    global writesToMainArray
+
+
     while not isSorted(data):
-        iterations+=1
         i = random.randint(0,len(data)-1)
         j = random.randint(0,len(data)-1)
         #swap
-        colorArray = ['Yellow' if x==i or x==j else 'Blue' for x in range(len(data))]
+        colorArray = ['Yellow' if x ==i or x==j else 'Blue' for x in range(len(data))]
         drawData(data,colorArray)
         data[i],data[j] = data[j],data[i]
+        totalSwaps+=1
+        writesToMainArray+=1
         colorArray=['Blue' for x in range(len(data))]
         drawData(data,colorArray)
         time.sleep(timeTick)
+        timeOfCompletion+=1
     colorArray = ['green' for _ in range(len(data))]
     drawData(data, colorArray) 
     time.sleep(timeTick) 
+    timeOfCompletion+=1
     drawData(data, ['lightgreen' for _ in range(len(data))])  
     time.sleep(timeTick) 
+
+    return timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray
+    
