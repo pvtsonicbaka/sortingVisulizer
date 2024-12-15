@@ -18,6 +18,8 @@ minSize=1
 maxSize=1
 
 
+
+
 timeOfCompletion=0
 totalSwaps=0
 writesToAuxilaryArray=0
@@ -25,16 +27,19 @@ writesToMainArray=0
 
 def printAlgoStates():
     child = Toplevel(root)
+    iconimage =PhotoImage(file=r"/home/sonic/Desktop/idk/sortingVisulizer/dragon.png")
+    child.iconphoto(True,iconimage)
     
     child.title("states")
     child.geometry("300x300")
     
-    label = Label(child, text="This is a new window!")
+    label = Label(child, text="This is a new window!",font=("Arial",12,"bold"),
+                  relief="groove",
+                  bd=20
+                  )
     label.pack(pady=20)
     
     # Add a button to close the new window
-    close_button = Button(child, text="Close", command=child.destroy)
-    close_button.pack()
 
 
 
