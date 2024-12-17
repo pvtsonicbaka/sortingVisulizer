@@ -25,18 +25,62 @@ totalSwaps=0
 writesToAuxilaryArray=0
 writesToMainArray=0
 
+def ZeroDivisionErrorPopUp():
+    zero =Toplevel(root)
+    zero_width=500
+    zero_height=400
+
+    zero.title("zero Window")
+    zero.config(background="cyan")
+
+    root_width=root.winfo_screenwidth()
+    root_height=root.winfo_screenheight()
+
+    pos_Left=int(root_height/2 - zero_height/2)
+    pos_Right=int(root_width/2 - zero_width/2)
+
+
+    zero.geometry(f"{zero_width}x{zero_height}+{pos_Right}+{pos_Left}")
+    
+    labelEroor = Label(zero,text="please select atleast one size array",font=("Z003",20,"bold")
+                       ,anchor="center",justify='center'
+                       ,background="cyan"
+                       )
+    labelEroor.pack(pady=100)
+
+    closeButton=Button(zero,text="Close",command=zero.destroy
+                       ,background="red",fg="orange",font=("MathJax_AMS",10,"bold")
+        )
+    closeButton.pack(pady=10)
+
+
+
+    zero.mainloop()
+
+
+
 def printAlgoStates():
     global timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray
 
     print(timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray)
 
+    child_height=500
+    child_width=500
+
+
+    root_hieght=root.winfo_screenheight()
+    root_width=root.winfo_screenwidth()
+
+    pos_left=int(root_hieght/2-child_height/2 )
+    pos_right=int(root_width/2 )
 
     child = Toplevel(root)
     iconimage =PhotoImage(file=r"/home/sonic/Desktop/idk/sortingVisulizer/dragon.png")
     child.iconphoto(True,iconimage)
     
     child.title("states")
-    child.geometry("300x300")
+    child.config(bg="#249388")
+    child.geometry(f"{child_width}x{child_height}+{pos_right}+{pos_left}")
 
     x_padding=0
     y_padding=0
@@ -114,8 +158,10 @@ def drawData(data,colorArray):
     canvas_width = canvas.winfo_width()
     canvas_height= canvas.winfo_height()
 
-
-    rec_width=canvas_width/(len(data))
+    try:
+        rec_width=canvas_width/(len(data))
+    except ZeroDivisionError:
+        ZeroDivisionErrorPopUp()
     padding_top=50
 
 

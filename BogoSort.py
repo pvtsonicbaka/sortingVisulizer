@@ -29,12 +29,15 @@ def bogosort(data,drawData,timeTick):
         #swap
         colorArray = ['Yellow' if x ==i or x==j else 'Blue' for x in range(len(data))]
         drawData(data,colorArray)
+        time.sleep(timeTick)
+
         data[i],data[j] = data[j],data[i]
         totalSwaps+=1
         writesToMainArray+=1
         colorArray=['Blue' for x in range(len(data))]
         drawData(data,colorArray)
         time.sleep(timeTick)
+        
         timeOfCompletion+=1
     colorArray = ['green' for _ in range(len(data))]
     drawData(data, colorArray) 
