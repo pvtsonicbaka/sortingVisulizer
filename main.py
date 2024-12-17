@@ -26,25 +26,69 @@ writesToAuxilaryArray=0
 writesToMainArray=0
 
 def printAlgoStates():
+    global timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray
+
+    print(timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray)
+
+
     child = Toplevel(root)
     iconimage =PhotoImage(file=r"/home/sonic/Desktop/idk/sortingVisulizer/dragon.png")
     child.iconphoto(True,iconimage)
     
     child.title("states")
     child.geometry("300x300")
+
+    x_padding=0
+    y_padding=0
     
-    label = Label(child, text="This is a new window!",font=("Arial",12,"bold"),
-                  relief="groove",
-                  bd=20
+
+
+    label = Label(child, text="Time:",font=("Arial",12,"bold")
                   )
-    label.pack(pady=20)
+    label.grid(row=0,column=0)
+
+    label1=Label(child,text=timeOfCompletion,
+                font=("Arial",12)  
+
+                )
+    label1.grid(row=0,column=1)
+
+
+    label2=Label(child,text="total Swaps:" ,font=("Arial",12)
+                )
+    label2.grid(row=1,column=0)
     
+    label3=Label(child,text=str(totalSwaps),font=("Arial",12)
+                )
+    label3.grid(row=1,column=1)
+    
+    label4=Label(child,text="total Writes to Auxilary Array" ,font=("Arial",12,"bold")
+                )
+    label4.grid(row=2,column=0)
+    
+    label5=Label(child,text=writesToAuxilaryArray ,font=("Arial",12)
+                )
+    label5.grid(row=2,column=1)
+    
+    label6=Label(child,text="Writes to main array" ,font=("Arial",12)
+                )
+    label6.grid(row=3,column=0)
+    
+    label7=Label(child,text=writesToMainArray ,font=("Arial",12)
+                )
+    label7.grid(row=3,column=1)
+    
+
+
+
+    
+    child.mainloop()
     # Add a button to close the new window
 
 
 
 def startAlgo():
-    global timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray
+    global timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArraymain
     sleeptime= speed.get()
 
     algo_name=algo.get()
