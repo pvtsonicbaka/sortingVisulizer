@@ -142,8 +142,7 @@ def startAlgo():
     elif algo_name=="Insertion sort":
         insertionSort(data,drawData,sleeptime)
     elif algo_name=="Merge Sort":
-        # mergeSort(data,drawData,sleeptime)
-        pass
+        merge_sort(data,drawData,sleeptime)
     elif algo_name=="Quick Sort":
         quicksort(data,0,len(data),drawData,sleeptime)
         drawData(data,['green' for x in range(len(data))])
