@@ -5,7 +5,7 @@ from Bubblesort import bubbleSort
 from BogoSort import bogosort
 from InsertionSort import insertionSort
 from MergeSort import *
-from QuickSort import quicksort
+from QuickSort import tempQuickSort
 
 
 root = Tk()
@@ -145,22 +145,23 @@ def printAlgoStates():
 
 
 def startAlgo():
-    global timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArraymain
+    global timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray
     sleeptime= speed.get()
     algo_name=algo.get()
-
+    if sleeptime==0:
+        #like if sleeptime is 0 1ms extremely fast
+        sleeptime=0.01
 
     print(algo,algo_name)
     if algo_name=="Bubble sort":
-        bubbleSort(data,drawData,sleeptime)
+        timeOfCompletion, totalSwaps, writesToAuxilaryArray, writesToMainArray=bubbleSort(data,drawData,sleeptime)
     elif algo_name=="Insertion sort":
-        insertionSort(data,drawData,sleeptime)
+        timeOfCompletion, totalSwaps, writesToAuxilaryArray, writesToMainArray=insertionSort(data,drawData,sleeptime)
+
     elif algo_name=="Merge Sort":
-        merge_sort(data,drawData,sleeptime)
+        timeOfCompletion, totalSwaps, writesToAuxilaryArray, writesToMainArray=merge_sort(data,drawData,sleeptime)
     elif algo_name=="Quick Sort":
-        quicksort(data,0,len(data),drawData,sleeptime)
-        drawData(data,['green' for x in range(len(data))])
-        print("i")
+        timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray=tempQuickSort(data,0,len(data),drawData,sleeptime)
     elif algo_name=="Bogo Sort":
         timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray = bogosort(data,drawData,sleeptime)
     else:
@@ -190,14 +191,17 @@ def drawData(data,colorArray):
 
      
     for i, height in enumerate(normalizedData):
-        x0 = i * rec_width + (1* spacing_bet_rec)  # Calculate the starting x position
-        y0 = canvas_height - (height * (canvas_height-padding_top))  # Starting y position based on normalized height
+        # Calculate the starting "x" position for normalize to fit in frame :)
+        x0 = i * rec_width + (1* spacing_bet_rec)  
+        # Starting y position liek to  normalized height
+        y0 = canvas_height - (height * (canvas_height-padding_top))  
         y0= max(y0,padding_top)
         
-        x1 = x0 + rec_width  # Ending x position
-        y1 = canvas_height  # Bottom of the canvas
+         # Ending x position
+        x1 = x0 + rec_width 
+        y1 = canvas_height 
 
-        # Draw rectangle
+        # Draw rectangle--
         canvas.create_rectangle(x0, y0, x1, y1, fill=colorArray[i])
         
         # Place text in the middle of the rectangle, above it
