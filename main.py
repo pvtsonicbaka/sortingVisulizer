@@ -58,84 +58,98 @@ def ZeroDivisionErrorPopUp():
     zero.mainloop()
 
 
+def popForSelectAlgo():
+    selectAlgo=Toplevel(root)
+    algo_width=500
+    algo_height=400
+
+    selectAlgo.title("Select Algo Window")
+    selectAlgo.config(background="cyan")
+
+    root_width=root.winfo_screenwidth()
+    root_height=root.winfo_screenheight()
+
+    pos_Left=int(root_height/2 - algo_height/2)
+    pos_Right=int(root_width/2 - algo_width/2)
+
+
+    selectAlgo.geometry(f"{algo_width}x{algo_height}+{pos_Right}+{pos_Left}")
+    
+    labelEroor = Label(selectAlgo,text="please select atleast one Algorithm",font=("Z003",20,"bold")
+                       ,anchor="center",justify='center'
+                       ,background="cyan"
+                       )
+    labelEroor.pack(pady=100)
+
+    closeButton=Button(selectAlgo,text="Close",command=selectAlgo.destroy
+                       ,background="red",fg="orange",font=("MathJax_AMS",10,"bold")
+        )
+    closeButton.pack(pady=10)
+
+
+
+    selectAlgo.mainloop()
+
+
 
 def printAlgoStates():
-    global timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray
+    global timeOfCompletion, totalSwaps, writesToAuxilaryArray, writesToMainArray
 
-    print(timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray)
+    print(timeOfCompletion, totalSwaps, writesToAuxilaryArray, writesToMainArray)
 
-    child_height=500
-    child_width=500
+    child_height = 300
+    child_width = 400
+    text_size = 12
 
+    root_height = root.winfo_screenheight()
+    root_width = root.winfo_screenwidth()
 
-    root_hieght=root.winfo_screenheight()
-    root_width=root.winfo_screenwidth()
-
-    pos_left=int(root_hieght/2-child_height/2 )
-    pos_right=int(root_width/2 )
+    pos_left = int(root_height / 2 - child_height / 2)
+    pos_right = int(root_width / 2)
 
     child = Toplevel(root)
-    iconimage =PhotoImage(file=r"/home/sonic/Desktop/idk/sortingVisulizer/dragon.png")
-    child.iconphoto(True,iconimage)
-    
-    child.title("states")
+    iconimage = PhotoImage(file=r"dragon.png")  
+    child.iconphoto(True, iconimage)
+    child.title("Algorithm Statistics")
     child.config(bg="#249388")
     child.geometry(f"{child_width}x{child_height}+{pos_right}+{pos_left}")
 
-    x_padding=0
-    y_padding=0
-    
+    vline1 = Canvas(child, width=1, height=child_height, bg="black")
+    vline1.grid(row=0, column=1, rowspan=4, sticky="ns")
 
+    label1 = Label(child, text="Time:", font=f"Georgia {text_size} italic bold", anchor="w", padx=20, bg="#249388")
+    label1.grid(row=0, column=0, sticky="w")
 
-    label = Label(child, text="Time:",font=("Arial",12,"bold")
-                  )
-    label.grid(row=0,column=0)
+    label2 = Label(child, text=timeOfCompletion, font=("Arial", 12), anchor="w", bg="#249388")
+    label2.grid(row=0, column=2, padx=30, sticky="w")
 
-    label1=Label(child,text=timeOfCompletion,
-                font=("Arial",12)  
+    label3 = Label(child, text="Total Swaps:", font=f"Georgia {text_size} italic bold", anchor="w", padx=20, bg="#249388")
+    label3.grid(row=1, column=0, sticky="w")
 
-                )
-    label1.grid(row=0,column=1)
+    label4 = Label(child, text=str(totalSwaps), font=("Arial", 12), anchor="w", bg="#249388")
+    label4.grid(row=1, column=2, padx=30, sticky="w")
 
+    label5 = Label(child, text="Writes to Auxiliary Array:", font=f"Georgia {text_size} italic bold", anchor="w", padx=20, bg="#249388")
+    label5.grid(row=2, column=0, sticky="w")
 
-    label2=Label(child,text="total Swaps:" ,font=("Arial",12)
-                )
-    label2.grid(row=1,column=0)
-    
-    label3=Label(child,text=str(totalSwaps),font=("Arial",12)
-                )
-    label3.grid(row=1,column=1)
-    
-    label4=Label(child,text="total Writes to Auxilary Array" ,font=("Arial",12,"bold")
-                )
-    label4.grid(row=2,column=0)
-    
-    label5=Label(child,text=writesToAuxilaryArray ,font=("Arial",12)
-                )
-    label5.grid(row=2,column=1)
-    
-    label6=Label(child,text="Writes to main array" ,font=("Arial",12)
-                )
-    label6.grid(row=3,column=0)
-    
-    label7=Label(child,text=writesToMainArray ,font=("Arial",12)
-                )
-    label7.grid(row=3,column=1)
-    
+    label6 = Label(child, text=writesToAuxilaryArray, font=("Arial", 12), anchor="w", bg="#249388")
+    label6.grid(row=2, column=2, padx=30, sticky="w")
 
+    label7 = Label(child, text="Writes to Main Array:", font=f"Georgia {text_size} italic bold", anchor="w", padx=20, bg="#249388")
+    label7.grid(row=3, column=0, sticky="w")
 
+    label8 = Label(child, text=writesToMainArray, font=("Arial", 12), anchor="w", bg="#249388")
+    label8.grid(row=3, column=2, padx=30, sticky="w")
 
-    
     child.mainloop()
-    # Add a button to close the new window
-
 
 
 def startAlgo():
     global timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArraymain
     sleeptime= speed.get()
-
     algo_name=algo.get()
+
+
     print(algo,algo_name)
     if algo_name=="Bubble sort":
         bubbleSort(data,drawData,sleeptime)
@@ -149,7 +163,10 @@ def startAlgo():
         print("i")
     elif algo_name=="Bogo Sort":
         timeOfCompletion,totalSwaps,writesToAuxilaryArray,writesToMainArray = bogosort(data,drawData,sleeptime)
-    
+    else:
+        popForSelectAlgo()
+        return
+       #making theh window for atleats one algo
     printAlgoStates()
 def drawData(data,colorArray):
     
