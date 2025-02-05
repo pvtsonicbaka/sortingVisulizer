@@ -6,6 +6,7 @@ from BogoSort import bogosort
 from InsertionSort import insertionSort
 from MergeSort import *
 from QuickSort import tempQuickSort
+import time
 
 
 root = Tk()
@@ -108,8 +109,8 @@ def printAlgoStates():
     pos_right = int(root_width / 2)
 
     child = Toplevel(root)
-    iconimage = PhotoImage(file=r"dragon.png")  
-    child.iconphoto(True, iconimage)
+    # iconimage = PhotoImage(file=r"dragon.png")  
+    # child.iconphoto(True, iconimage)
     child.title("Algorithm Statistics")
     child.config(bg="#249388")
     child.geometry(f"{child_width}x{child_height}+{pos_right}+{pos_left}")
@@ -120,7 +121,7 @@ def printAlgoStates():
     label1 = Label(child, text="Time:", font=f"Georgia {text_size} italic bold", anchor="w", padx=20, bg="#249388")
     label1.grid(row=0, column=0, sticky="w")
 
-    label2 = Label(child, text=timeOfCompletion, font=("Arial", 12), anchor="w", bg="#249388")
+    label2 = Label(child, text=str(timeOfCompletion)+" seconds", font=("Arial", 12), anchor="w", bg="#249388")
     label2.grid(row=0, column=2, padx=30, sticky="w")
 
     label3 = Label(child, text="Total Swaps:", font=f"Georgia {text_size} italic bold", anchor="w", padx=20, bg="#249388")
@@ -151,7 +152,7 @@ def startAlgo():
     if sleeptime==0:
         #like if sleeptime is 0 1ms extremely fast
         sleeptime=0.01
-
+    startTIme=time.strftime("%H:%M:%S")
     print(algo,algo_name)
     if algo_name=="Bubble sort":
         timeOfCompletion, totalSwaps, writesToAuxilaryArray, writesToMainArray=bubbleSort(data,drawData,sleeptime)
@@ -168,7 +169,25 @@ def startAlgo():
         popForSelectAlgo()
         return
        #making theh window for atleats one algo
+    EndTime=time.strftime("%H:%M:%S")
+
+    timeOfCompletion=minusTime(EndTime,startTIme)
+    print(timeOfCompletion,startTIme ,EndTime)
     printAlgoStates()
+
+def minusTime(st:str,ed:str):
+    h1=st.split(":")[0]
+    h2=ed.split(":")[0]
+    m1=st.split(":")[1]
+    m2=ed.split(":")[1]
+    s1=st.split(":")[2]
+    s2=ed.split(":")[2]
+    hoursecond=(int(h1)-int(h2))
+    minuteSecond=int(m1)-int(m2)
+    totalSecond=(hoursecond*3600)+(minuteSecond*60)+(int(s1)-int(s2))
+    print(totalSecond)
+    return totalSecond  
+
 def drawData(data,colorArray):
     
 
