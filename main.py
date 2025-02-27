@@ -271,7 +271,7 @@ algo_menu.grid(row=0, column=1, padx=10, pady=8)
 # Input Size Label and Scale
 sizeLabel = Label(root, text="Input Size:", font="Courier 15 italic bold", bg="green", relief="solid", width=15)
 sizeLabel.grid(row=1, column=0, padx=20, pady=8)
-size = Scale(root, from_=0, to=100, orient="horizontal", font="Courier 15 italic bold", bg="green", relief="solid", width=15)
+size = Scale(root, from_=0, to=1000, orient="horizontal", font="Courier 15 italic bold", bg="green", relief="solid", width=15)
 size.grid(row=1, column=1, padx=20, pady=8)
 
 # Minimum Size Label and Scale
